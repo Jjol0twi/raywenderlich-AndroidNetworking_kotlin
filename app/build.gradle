@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
+//    id 'kotlin-android-extensions'  //findViewById으로 인한 불편함을 지우기 위해 사용한 plugin android에서 퇴출당함
     id 'org.jetbrains.kotlin.android'
 }
 
@@ -32,8 +34,8 @@ android {
 }
 
 dependencies {
-
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation "org.jetbrains.anko:anko-common:0.10.8"  //kotlin DSL origin version: 0.10.0
+    implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
