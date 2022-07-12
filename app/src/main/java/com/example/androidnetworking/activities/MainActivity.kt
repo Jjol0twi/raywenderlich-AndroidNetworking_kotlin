@@ -62,10 +62,9 @@ class MainActivity : Activity() {
 
     //retrofit 호출 및 연결 성공 유무 판결
     private val repoRetriever = RepositoryRetriever()
-
     private val callback = object : Callback<RepoResult> {
-        override fun onFailure(call: Call<RepoResult>?, t: Throwable?) {
-            Log.e("MainActivity", "Problem calling Github API ${t?.message}")
+        override fun onFailure(call: Call<RepoResult>?, t:Throwable?) {
+            Log.e("MainActivity", "Problem calling Github API {${t?.message}}")
         }
 
         override fun onResponse(call: Call<RepoResult>?, response: Response<RepoResult>?) {
@@ -75,6 +74,7 @@ class MainActivity : Activity() {
             }
         }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
