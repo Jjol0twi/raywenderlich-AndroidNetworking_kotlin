@@ -41,7 +41,12 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidnetworking.R
 import com.example.androidnetworking.adapters.RepoListAdapter
+import com.example.androidnetworking.api.RepositoryRetriever
+import com.example.androidnetworking.data.RepoResult
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : Activity() {
 
@@ -55,22 +60,39 @@ class MainActivity : Activity() {
         "JetBrains/kotlin - The Kotlin Programming Language"
     )
 
+    //retrofit 호출 및 연결 성공 유무 판결
+    private val repoRetriever = RepositoryRetriever()
+
+    private val callback = object : Callback<RepoResult> {
+        override fun onFailure(call: Call<RepoResult>?, t: Throwable?) {
+            Log.e("MainActivity", "Problem calling Github API ${t?.message}")
+        }
+
+        override fun onResponse(call: Call<RepoResult>?, response: Response<RepoResult>?) {
+            response?.isSuccessful.let {
+                val resultList = RepoResult(response?.body()?.items ?: emptyList())
+                repoList.adapter = RepoListAdapter(resultList)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         repoList.layoutManager = LinearLayoutManager(this)
-        repoList.adapter = RepoListAdapter(items)
 
-        val url =
-            "https://api.github.com/search/repositories?q=mario+language:kotlin&sort=stars&order=desc"
         if (isNetworkConnected()){
-            Log.d("please","is conneted")
+            repoRetriever.getRepositories(callback)
         }else {
             AlertDialog.Builder(this).setTitle("No Internet Connection")    //messageBox
                 .setMessage("please check your internet connection and try again")
                 .setPositiveButton(android.R.string.ok){_,_->}  //_: substitues an unused parameter in lambda expression
                 .setIcon(android.R.drawable.ic_dialog_alert).show()
+        }
+
+        refreshButton.setOnClickListener {
+            repoRetriever.getRepositories(callback)
         }
 //        doAsync {
 //            Request(url).run()

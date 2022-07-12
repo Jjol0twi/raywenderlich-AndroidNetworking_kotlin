@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'  //retrofit origin version: 2.6.3
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     //retrofit gson converter origin version: 2.6.3
+    implementation 'com.squareup.picasso:picasso:2.71828'   //add img
     implementation "org.jetbrains.anko:anko-common:0.10.8"  //kotlin DSL origin version: 0.10.0
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'

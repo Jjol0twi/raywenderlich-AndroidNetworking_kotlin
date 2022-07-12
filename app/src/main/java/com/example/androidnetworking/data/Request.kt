@@ -34,7 +34,7 @@ package com.example.androidnetworking.data
 import com.google.gson.Gson
 import java.net.URL
 
-class Request(private val url: String) {
+class Request() {
   companion object {
     private val URL = "https://api.github.com/search/repositories"
     private val SEARCH = "q=language:kotlin&sort=stars&order=desc"

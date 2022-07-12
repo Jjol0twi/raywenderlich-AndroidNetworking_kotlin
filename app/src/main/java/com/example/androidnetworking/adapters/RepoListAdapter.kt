@@ -39,9 +39,10 @@ import com.example.androidnetworking.R
 import com.example.androidnetworking.data.Item
 import com.example.androidnetworking.data.RepoResult
 import com.example.androidnetworking.extensions.ctx
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_repo.view.*
 
-class RepoListAdapter(private val repoList: List<String>) : RecyclerView.Adapter<RepoListAdapter.ViewHolder>() {
+class RepoListAdapter(private val repoList: RepoResult) : RecyclerView.Adapter<RepoListAdapter.ViewHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_repo, parent, false)
@@ -56,12 +57,10 @@ class RepoListAdapter(private val repoList: List<String>) : RecyclerView.Adapter
 
   class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindRepo(repo: Item) {
-      //5
       itemView.username.text = repo.owner.login.orEmpty()
-      //6
       itemView.repoName.text = repo.fullName.orEmpty()
-      //7
       itemView.repoDescription.text = repo.description.orEmpty()
+      Picasso.get().load(repo.owner.avatarUrl).into(itemView.icon)  //avatarUrl
     }
   }
 }
