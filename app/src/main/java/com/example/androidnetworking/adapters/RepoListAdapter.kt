@@ -42,25 +42,26 @@ import com.example.androidnetworking.extensions.ctx
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_repo.view.*
 
-class RepoListAdapter(private val repoList: RepoResult) : RecyclerView.Adapter<RepoListAdapter.ViewHolder>() {
+class RepoListAdapter(private val repoList: RepoResult) :
+    RecyclerView.Adapter<RepoListAdapter.ViewHolder>() {
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_repo, parent, false)
-    return ViewHolder(view)
-  }
-
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.bindRepo(repoList.items[position])
-  }
-
-  override fun getItemCount(): Int = repoList.items.size
-
-  class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    fun bindRepo(repo: Item) {
-      itemView.username.text = repo.owner.login.orEmpty()
-      itemView.repoName.text = repo.fullName.orEmpty()
-      itemView.repoDescription.text = repo.description.orEmpty()
-      Picasso.get().load(repo.owner.avatarUrl).into(itemView.icon)  //avatarUrl
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_repo, parent, false)
+        return ViewHolder(view)
     }
-  }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bindRepo(repoList.items[position])
+    }
+
+    override fun getItemCount(): Int = repoList.items.size
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bindRepo(repo: Item) {
+            itemView.username.text = repo.owner.login.orEmpty()
+            itemView.repoName.text = repo.fullName.orEmpty()
+            itemView.repoDescription.text = repo.description.orEmpty()
+            Picasso.get().load(repo.owner.avatarUrl).into(itemView.icon)  //avatarUrl
+        }
+    }
 }

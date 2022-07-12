@@ -57,19 +57,21 @@ class MainActivity : Activity() {
         "JetBrains/kotlin - The Kotlin Programming Language",
         "exercism/kotlin - Exercism exercises in Kotlin",
         "cbeust/kobalt - A Kotlin-based build system for the JVM",
-        "JetBrains/kotlin - The Kotlin Programming Language"
+        "JetBrains/kotlin - The Kotlin Programming Language",
     )
 
     //retrofit 호출 및 연결 성공 유무 판결
     private val repoRetriever = RepositoryRetriever()
     private val callback = object : Callback<RepoResult> {
-        override fun onFailure(call: Call<RepoResult>?, t:Throwable?) {
-            Log.e("MainActivity", "Problem calling Github API {${t?.message}}")
+        override fun onFailure(call: Call<RepoResult>, t: Throwable) {
+            Log.e("MainActivity", "Problem calling Github API {${t.message}}")
         }
 
-        override fun onResponse(call: Call<RepoResult>?, response: Response<RepoResult>?) {
-            response?.isSuccessful.let {
-                val resultList = RepoResult(response?.body()?.items ?: emptyList())
+        override fun onResponse(call: Call<RepoResult>, response: Response<RepoResult>) {
+            response.isSuccessful.let {
+                val resultList = RepoResult(response.body()?.items ?: emptyList())
+                Log.e("MainActivity", "Calling Github API")
+
                 repoList.adapter = RepoListAdapter(resultList)
             }
         }
@@ -82,12 +84,12 @@ class MainActivity : Activity() {
 
         repoList.layoutManager = LinearLayoutManager(this)
 
-        if (isNetworkConnected()){
+        if (isNetworkConnected()) {
             repoRetriever.getRepositories(callback)
-        }else {
+        } else {
             AlertDialog.Builder(this).setTitle("No Internet Connection")    //messageBox
                 .setMessage("please check your internet connection and try again")
-                .setPositiveButton(android.R.string.ok){_,_->}  //_: substitues an unused parameter in lambda expression
+                .setPositiveButton(android.R.string.ok) { _, _ -> }  //_: substitues an unused parameter in lambda expression
                 .setIcon(android.R.drawable.ic_dialog_alert).show()
         }
 
