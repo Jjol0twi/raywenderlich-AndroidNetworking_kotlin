@@ -71,7 +71,6 @@ class MainActivity : Activity() {
                 .setMessage("please check your internet connection and try again")
                 .setPositiveButton(android.R.string.ok){_,_->}  //_: substitues an unused parameter in lambda expression
                 .setIcon(android.R.drawable.ic_dialog_alert).show()
-
         }
 //        doAsync {
 //            Request(url).run()
